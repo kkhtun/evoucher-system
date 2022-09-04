@@ -1,8 +1,2 @@
 
-To Do
-=====
-diagrams
-postman collection for promo
-use promo
-frontend
 

@@ -197,6 +197,12 @@ module.exports = ({
             const response = await adaptor.addQRToEvoucherResponse(result);
             return res.status(200).send(response);
         } catch (e) {
+            if (e.message === EVOUCHER_ERRORS.EVOUCHER_NOT_FOUND) {
+                return res.status(404).send({
+                    code: 404,
+                    message: e.message,
+                });
+            }
             return next(e);
         }
     },

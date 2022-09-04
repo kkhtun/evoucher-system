@@ -1,7 +1,7 @@
 const Joi = require("joi");
 Joi.objectid = require("joi-objectid")(Joi);
 
-module.exports = ({ CodeController, PROMO_CODE_ERRORS }) => ({
+module.exports = ({ CodeController, PROMO_CODE_ERRORS, EVOUCHER_ERRORS }) => ({
     generatePromoCode: async (req, res, next) => {
         const { value, error } = Joi.object({
             quantity: Joi.number().integer().min(1).required(),
@@ -17,6 +17,12 @@ module.exports = ({ CodeController, PROMO_CODE_ERRORS }) => ({
             const response = await CodeController.generatePromoCode(value);
             return res.status(201).send(response);
         } catch (e) {
+            if (e.message === EVOUCHER_ERRORS.EVOUCHER_NOT_FOUND) {
+                return res.status(404).send({
+                    code: 404,
+                    message: e.message,
+                });
+            }
             return next(e);
         }
     },
