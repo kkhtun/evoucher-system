@@ -58,4 +58,20 @@ module.exports = () => ({
             .toArray();
         return data;
     },
+
+    usePromoCode: async ({ code, used_amount }) => {
+        const response = await axios.post(
+            `${process.env.PROMO_CODE_SERVICE_HOST}/api/v1/promo_codes/use`,
+            {
+                code,
+                used_amount,
+            },
+            {
+                headers: {
+                    Authorization: process.env.SHARED_SERVER_SECRET,
+                },
+            }
+        );
+        return R.prop("data", response);
+    },
 });

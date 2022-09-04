@@ -133,6 +133,42 @@ module.exports = ({
             return next(e);
         }
     },
+    useEvoucherPromoCode: async (req, res, next) => {
+        const { value, error } = Joi.object({
+            code: Joi.string().length(11).required(),
+            mobile: Joi.string().required(),
+            used_amount: Joi.number().min(0).required(),
+        }).validate(req.body);
+
+        if (error) return next(error);
+
+        try {
+            const response = await EvoucherController.useEvoucherPromoCode(
+                value
+            );
+            return res.status(200).send(response);
+        } catch (e) {
+            if (e.message === EVOUCHER_ERRORS.EVOUCHER_NOT_FOUND) {
+                return res.status(404).send({
+                    code: 404,
+                    message: e.message,
+                });
+            }
+            if (
+                e.message === EVOUCHER_ERRORS.INVALID_STATUS ||
+                e.message === EVOUCHER_ERRORS.INVALID_MOBILE ||
+                e.message === EVOUCHER_ERRORS.EVOUCHER_EXPIRED ||
+                e.message === EVOUCHER_ERRORS.EVOUCHER_ZERO_BALANCE ||
+                e.message === EVOUCHER_ERRORS.EVOUCHER_LIMIT_REACHED
+            ) {
+                return res.status(400).send({
+                    code: 400,
+                    message: e.message,
+                });
+            }
+            return next(e);
+        }
+    },
     getEvouchers: async (req, res, next) => {
         const { value, error } = Joi.object({
             limit: Joi.number().integer().default(10),

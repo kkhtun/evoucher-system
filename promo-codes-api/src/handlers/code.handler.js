@@ -9,7 +9,6 @@ module.exports = ({ CodeController, PROMO_CODE_ERRORS }) => ({
             evoucher_username: Joi.string().required(),
             evoucher_mobile: Joi.string().required(),
             balance: Joi.number().required(),
-            purchased_times: Joi.number().integer().default(0),
         }).validate(req.body);
 
         if (error) return next(error);

@@ -48,7 +48,7 @@ const EvoucherSchema = new mongoose.Schema(
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            // required: true,
+            required: true,
         },
         status: {
             type: String,
@@ -79,4 +79,4 @@ const EvoucherSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("EvoucherModel", EvoucherSchema, "evouchers");
+module.exports = mongoose.model("Evoucher", EvoucherSchema, "evouchers");

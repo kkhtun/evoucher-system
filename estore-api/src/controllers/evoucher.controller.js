@@ -67,4 +67,15 @@ module.exports = ({
 
         return { evoucher, code: promoCode };
     },
+    useEvoucherPromoCode: async ({ code, mobile, used_amount }) => {
+        const promoCode = await CodeService.getPromoCode(code);
+        const evoucher = await EvoucherService.validateEvoucherWithCode({
+            ...promoCode,
+            caller_mobile: mobile,
+        });
+
+        const usedCode = await CodeService.usePromoCode({ code, used_amount });
+
+        return { evoucher, code: usedCode };
+    },
 });

@@ -10,7 +10,7 @@ const PromoCodeSchema = new mongoose.Schema(
         },
         evoucher: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "EvoucherModel",
+            required: true,
         },
         // who will use the voucher
         evoucher_username: {

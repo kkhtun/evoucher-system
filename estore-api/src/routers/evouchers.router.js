@@ -8,6 +8,8 @@ module.exports = ({ EvoucherHandler }) => {
 
     router.get("/validate", EvoucherHandler.checkPromoCodeIsValid);
 
+    router.post("/use", EvoucherHandler.useEvoucherPromoCode);
+
     router.get("/:_id", EvoucherHandler.getOneEvoucher);
 
     router.post("/checkout", EvoucherHandler.checkoutEvoucher);
