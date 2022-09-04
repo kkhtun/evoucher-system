@@ -62,6 +62,7 @@ export default function EvoucherDetails() {
                                 Purchased Times - {c.purchased_times}
                             </Typography>
                             <Typography>Balance - {c.balance}</Typography>
+                            <img src={c.qr_code} />
                             <Divider sx={{ my: 2 }}></Divider>
                         </Box>
                     ))
